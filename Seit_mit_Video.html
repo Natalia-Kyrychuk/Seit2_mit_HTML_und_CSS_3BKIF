@@ -240,28 +240,26 @@
     <!-- Панель фильтров (только визуально, без JS) -->
     <section class="filters">
   <div class="filters-left">
-    <button class="filter-chip active">Все / Alles</button>
-    <button class="filter-chip">Вчимося читати / Wir lernen lesen</button>
-    <button class="filter-chip">Вчимося рахувати / Zählen lernen</button>
-    <button class="filter-chip">Вчимося малювати / Zeichnen lernen</button>
-    <button class="filter-chip">Інформатика / Informatik</button>
-  </div>
+  <button class="filter-chip active" data-filter="all">Все / Alles</button>
+  <button class="filter-chip" data-filter="read">Вчимося читати / Wir lernen lesen</button>
+  <button class="filter-chip" data-filter="math">Вчимося рахувати / Zählen lernen</button>
+  <button class="filter-chip" data-filter="draw">Вчимося малювати / Zeichnen lernen</button>
+  <button class="filter-chip" data-filter="cs">Інформатика / Informatik</button>
+</div>
+
   <div class="filters-right">
-    <input
-      type="search"
-      class="search-input"
-      placeholder="Поиск по названию..."
-    />
+    <input type="search" id="videoSearch" class="search-input" placeholder="Поиск по названию..." />
+
   </div>
 </section>
 
 
         <!-- Розділи з відео по рубриках -->
 
-    <!-- МАТЕМАТИКА -->
-    <section class="category-section">
+    <!-- Чтение -->
+    <section class="category-section" data-category="read">
       
-      <h2 class="section-title">Читання</h2>
+      <h2 class="section-title">Читання/Lektüre</h2>
       <div class="video-grid">
         
         <article class="video-card">
@@ -282,13 +280,13 @@
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Вчимося читати склади з буквою М: МА, МО, МУ, МЕ, МИ, МІ.</h3>
+            <h3 class="video-title">Вчимося читати склади з буквою М: МА, МО, МУ, МЕ, МИ, МІ./Wir lernen, Silben mit dem Buchstaben M zu lesen: MA, MO, MU, ME, MI, MI.</h3>
             <div class="video-meta">
               <span class="badge badge--youtube">YouTube</span>
               <span>Рівень: 1–2 клас</span>
             </div>
             <p class="video-description">
-             Для дітей підготовчих груп та першокласників навчання читанню складів з буквою М.
+             Для дітей підготовчих груп та першокласників навчання читанню складів з буквою М./Für Kinder in Vorschulgruppen und Erstklässler: das Erlernen des Lesens von Silben mit dem Buchstaben M.
             </p>
           </div>
         </article>
@@ -307,13 +305,13 @@
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Голосні звуки та букви, які їх позначають: А, О, У, Е, И, І.</h3>
+            <h3 class="video-title">Голосні звуки та букви, які їх позначають: А, О, У, Е, И, І./Vokallaute und die Buchstaben, die sie repräsentieren: A, O, U, E, I, I.</h3>
             <div class="video-meta">
               <span class="badge badge--local">Файл на сайті</span>
               <span>Рівень: 1–2 клас</span>
             </div>
             <p class="video-description">
-              Вивчення голосних звуків А, О, У, Е, И, І та букв, які їх позначають в цікавій ігровій формі. Для дітей підготовчих груп, учнів початкових класів, їх батьків, вчителів та вихователів.
+              Вивчення голосних звуків А, О, У, Е, И, І та букв, які їх позначають в цікавій ігровій формі. Для дітей підготовчих груп, учнів початкових класів, їх батьків, вчителів та вихователів./Die Vokale A, O, U, E, I und die dazugehörigen Buchstaben auf spielerische und interessante Weise kennenlernen. Für Kinder in Vorschulgruppen, Grundschüler, deren Eltern, Lehrer und Erzieher.
             </p>
           </div>
         </article>
@@ -322,9 +320,9 @@
       </div>
     </section>
 
-    <!-- ЧИТАННЯ -->
-    <section class="category-section">
-      <h2 class="section-title">Математика</h2>
+    <!-- Математика -->
+   
+    <section class="category-section" data-category="math">
 
       <div class="video-grid">
         <!-- 1. YouTube-відео (математика) -->
@@ -346,13 +344,13 @@
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Склад числа 3.</h3>
+            <h3 class="video-title">Склад числа 3./Zusammensetzung der Zahl 3.</h3>
             <div class="video-meta">
               <span class="badge badge--youtube">YouTube</span>
-              <span>Рівень: 1–2 клас</span>
+              <span>Рівень: 1–2 клас/Niveau: Klasse 1–2</span>
             </div>
             <p class="video-description">
-             В допомогу дошкільнятам та першокласникам для легкого запам'ятовування складу числа 3. Відомості про те, де зустрічається число 3.
+             В допомогу дошкільнятам та першокласникам для легкого запам'ятовування складу числа 3. Відомості про те, де зустрічається число 3./Um Vorschulkindern und Erstklässlern das Einprägen der Zusammensetzung der Zahl 3 zu erleichtern. Informationen darüber, wo die Zahl 3 vorkommt.
             </p>
           </div>
         </article>
@@ -367,13 +365,13 @@
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">КАЗКА: склад числа 10</h3>
+            <h3 class="video-title">КАЗКА: склад числа 10/MÄRCHEN: Zusammensetzung der Zahl 10</h3>
             <div class="video-meta">
               <span class="badge badge--local">Файл на сайті</span>
-              <span>Рівень: 1-2 клас</span>
+              <span>Рівень: 1-2 клас/Niveau: Klasse 1-2</span>
             </div>
             <p class="video-description">
-              Навчальне відео про склад числа 10 для дітей молодшої школи.
+              Навчальне відео про склад числа 10 для дітей молодшої школи./Lehrvideo über die Zusammensetzung der Zahl 10 für Grundschulkinder.
             </p>
           </div>
         </article>
@@ -381,21 +379,21 @@
     </section>
 
     <!-- МАЛЮВАННЯ -->
-    <section class="category-section">
-      <h2 class="section-title">Малювання на комп’ютері</h2>
+    <section class="category-section" data-category="draw">
+      <h2 class="section-title">Малювання на комп’ютері/Zeichnen am Computer</h2>
 
       <div class="video-grid">
         <!-- 1. YouTube-відео (малювання) -->
         <article class="video-card">
           <div class="video-wrapper video-link-wrapper">
             <a
-              href="https://youtu.be/VIDEO_ID_DRAWING"
+              href="https://youtu.be/j_lMQfmCwgA"
               target="_blank"
               rel="noopener noreferrer"
               class="video-link"
             >
               <img
-                src="https://img.youtube.com/vi/VIDEO_ID_DRAWING/hqdefault.jpg"
+                src="cat.png"
                 alt="Малюємо на комп'ютері (YouTube)"
                 class="video-thumb"
               />
@@ -404,13 +402,13 @@
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Перші кроки в малюванні на комп’ютері</h3>
+            <h3 class="video-title">Перші кроки в малюванні на комп’ютері/Erste Schritte beim Zeichnen am Computer</h3>
             <div class="video-meta">
               <span class="badge badge--youtube">YouTube</span>
               <span>Рівень: 2–3 клас</span>
             </div>
             <p class="video-description">
-              Знайомство з простою програмою для малювання та базовими інструментами.
+              Знайомство з простою програмою для малювання та базовими інструментами./Einführung in ein einfaches Zeichenprogramm und grundlegende Werkzeuge.
             </p>
           </div>
         </article>
@@ -419,23 +417,23 @@
         <article class="video-card">
           <div class="video-wrapper">
             <video
-              src="drawing_lesson_1.mp4"
+              src="Рисуем дом в программе Paint..mp4"
               controls
               preload="metadata"
-              poster="drawing_lesson_1.png"
+              poster="Haus.png"
             >
               Ваш браузер не підтримує відтворення відео.
             </video>
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Малюємо будиночок</h3>
+            <h3 class="video-title">Малюємо будиночок/Ein Haus zeichnen</h3>
             <div class="video-meta">
-              <span class="badge badge--local">Файл на сайті</span>
-              <span>Рівень: 2–3 клас</span>
+              <span class="badge badge--local">Файл на сайті/Datei auf der Website</span>
+              <span>Рівень: 2–3 клас/Niveau: Klasse 2–3</span>
             </div>
             <p class="video-description">
-              Покрокове малювання простого будиночка з використанням основних фігур.
+              Покрокове малювання простого будиночка з використанням основних фігур./Schrittweise Zeichnung eines einfachen Hauses aus Grundformen.
             </p>
           </div>
         </article>
@@ -443,21 +441,21 @@
     </section>
 
     <!-- ІНФОРМАТИКА -->
-    <section class="category-section">
-      <h2 class="section-title">Інформатика</h2>
+    <section class="category-section" data-category="cs">
+      <h2 class="section-title">Інформатика/Informatik</h2>
 
       <div class="video-grid">
         <!-- 1. YouTube-відео (інформатика) -->
         <article class="video-card">
           <div class="video-wrapper video-link-wrapper">
             <a
-              href="https://youtu.be/VIDEO_ID_CS"
+              href="https://youtu.be/o3ceS1zRM7Q"
               target="_blank"
               rel="noopener noreferrer"
               class="video-link"
             >
               <img
-                src="https://img.youtube.com/vi/VIDEO_ID_CS/hqdefault.jpg"
+                src="Test_Power_Point.png"
                 alt="Перші кроки в інформатиці (YouTube)"
                 class="video-thumb"
               />
@@ -466,7 +464,7 @@
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Перші кроки в інформатиці</h3>
+            <h3 class="video-title">Створення тесту опитування за допомогою програми презентації Microsoft PowerPoint/Erstellen Sie einen Umfragetest mit der Microsoft PowerPoint-Präsentationssoftware.</h3>
             <div class="video-meta">
               <span class="badge badge--youtube">YouTube</span>
               <span>Рівень: 2–4 клас</span>
@@ -481,23 +479,23 @@
         <article class="video-card">
           <div class="video-wrapper">
             <video
-              src="cs_lesson_1.mp4"
+              src="Створення таблиці множення в Excel.mp4"
               controls
               preload="metadata"
-              poster="cs_lesson_1.png"
+              poster="Tabl_multipleziert.png"
             >
               Ваш браузер не підтримує відтворення відео.
             </video>
           </div>
 
           <div class="video-content">
-            <h3 class="video-title">Мишка та клавіатура</h3>
+            <h3 class="video-title">Створення таблиці множення в Excel/Erstellen einer Multiplikationstabelle in Excel</h3>
             <div class="video-meta">
               <span class="badge badge--local">Файл на сайті</span>
-              <span>Рівень: 2–3 клас</span>
+              <span>Рівень: 3–4 клас?Niveau: Klasse 3–4</span>
             </div>
             <p class="video-description">
-              Вчимося користуватися мишкою та основними клавішами клавіатури.
+              Вчимося користуватися мишкою та клавіатурoю.?Wir lernen den Umgang mit Maus und Tastatur.
             </p>
           </div>
         </article>
@@ -506,5 +504,62 @@
 
 
   </main>
+  <script>
+  // Фильтрация по кнопкам + поиск по названию/описанию
+  const filterButtons = document.querySelectorAll(".filter-chip");
+  const searchInput = document.querySelector(".search-input");
+
+  const sections = document.querySelectorAll(".category-section");
+
+  let activeFilter = "all";
+  let searchQuery = "";
+
+  function applyFilters() {
+    const q = searchQuery.trim().toLowerCase();
+
+    sections.forEach((section) => {
+      const sectionCategory = section.dataset.category; // read / math / draw / cs
+      const cards = section.querySelectorAll(".video-card");
+
+      let anyCardVisible = false;
+
+      cards.forEach((card) => {
+        const title = card.querySelector(".video-title")?.textContent ?? "";
+        const desc = card.querySelector(".video-description")?.textContent ?? "";
+        const haystack = (title + " " + desc).toLowerCase();
+
+        const matchesSearch = q === "" || haystack.includes(q);
+        const matchesCategory = activeFilter === "all" || sectionCategory === activeFilter;
+
+        const isVisible = matchesSearch && matchesCategory;
+        card.style.display = isVisible ? "" : "none";
+
+        if (isVisible) anyCardVisible = true;
+      });
+
+      // Если в секции не осталось видимых карточек — скрываем всю секцию
+      section.style.display = anyCardVisible ? "" : "none";
+    });
+  }
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      filterButtons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      activeFilter = btn.dataset.filter || "all";
+      applyFilters();
+    });
+  });
+
+  searchInput.addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    applyFilters();
+  });
+
+  // На случай если страница открылась с уже заполненным поиском (редко)
+  applyFilters();
+</script>
+
 </body>
 </html>
