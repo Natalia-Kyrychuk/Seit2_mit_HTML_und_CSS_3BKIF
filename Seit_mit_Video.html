@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Мої навчальні відео</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Базовые стили страницы */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+
+    header {
+      padding: 24px 16px;
+      text-align: center;
+      background: #020617;
+      border-bottom: 1px solid #1f2937;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin: 0;
+      color: #9ca3af;
+      max-width: 600px;
+      margin-inline: auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    /* Сетка карточек видео */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .video-card {
+      background: #020617;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-color: #4b5563;
+    }
+
+    /* Обёртка, чтобы видео было адаптивным 16:9 */
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: #020617;
+    }
+
+    .video-wrapper iframe,
+    .video-wrapper video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 0;
+    }
+
+    .video-content {
+      padding: 14px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .video-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .video-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      align-items: center;
+    }
+
+    .badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      font-size: 0.75rem;
+    }
+
+    .badge--youtube {
+      border-color: #ef4444;
+    }
+
+    .badge--local {
+      border-color: #22c55e;
+    }
+
+    .video-description {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      line-height: 1.4;
+    }
+
+    /* Фильтры наверху (по желанию) */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .filters-left,
+    .filters-right {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .filter-chip {
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: transparent;
+      color: #e5e7eb;
+    }
+
+    .filter-chip.active {
+      background: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .search-input {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 0.8rem;
+      min-width: 200px;
+    }
+
+    .search-input::placeholder {
+      color: #6b7280;
+    }
+.video-link-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Полупрозрачная кнопка Play поверх превью */
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: rgba(0, 0, 0, 0.35);
+  color: #f9fafb;
+  pointer-events: none;
+}
+.category-section {
+  margin-top: 32px;
+}
+
+.section-title {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+    @media (max-width: 640px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .filters-right {
+        width: 100%;
+      }
+      .search-input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Мої навчальні відео/Meine Lehrvideos</h1>
+    <p>
+     Тут зібрані мої уроки та навчальні ролики. Частина відео завантажена на
+      YouTube, частина зберігається прямо на сайті./Hier finden Sie meine Lektionen und Lehrvideos. Einige der Videos sind auf YouTube hochgeladen, andere sind direkt auf der Website gespeichert.
+    </p>
+  </header>
+
+  <main class="container">
+    <!-- Панель фильтров (только визуально, без JS) -->
+    <section class="filters">
+  <div class="filters-left">
+    <button class="filter-chip active">Все / Alles</button>
+    <button class="filter-chip">Вчимося читати / Wir lernen lesen</button>
+    <button class="filter-chip">Вчимося рахувати / Zählen lernen</button>
+    <button class="filter-chip">Вчимося малювати / Zeichnen lernen</button>
+    <button class="filter-chip">Інформатика / Informatik</button>
+  </div>
+  <div class="filters-right">
+    <input
+      type="search"
+      class="search-input"
+      placeholder="Поиск по названию..."
+    />
+  </div>
+</section>
+
+
+        <!-- Розділи з відео по рубриках -->
+
+    <!-- МАТЕМАТИКА -->
+    <section class="category-section">
+      
+      <h2 class="section-title">Читання</h2>
+      <div class="video-grid">
+        
+        <article class="video-card">
+          <div class="video-wrapper video-link-wrapper">
+            <a
+              href="https://youtu.be/vUoMb13l3Ck"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="video-link"
+            >
+              <img
+                src="https://img.youtube.com/vi/vUoMb13l3Ck/hqdefault.jpg"
+                alt="Склад числа 10 (YouTube)"
+                class="video-thumb"
+              />
+              <div class="video-play-overlay">▶</div>
+            </a>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Вчимося читати склади з буквою М: МА, МО, МУ, МЕ, МИ, МІ.</h3>
+            <div class="video-meta">
+              <span class="badge badge--youtube">YouTube</span>
+              <span>Рівень: 1–2 клас</span>
+            </div>
+            <p class="video-description">
+             Для дітей підготовчих груп та першокласників навчання читанню складів з буквою М.
+            </p>
+          </div>
+        </article>
+
+        <!-- 2. Локальне відео (голосні звуки) -->
+        <article class="video-card">
+          <div class="video-wrapper">
+            <video
+              src="Holosni_Svuky.mp4"
+              controls
+              preload="metadata"
+              poster="foto Svuky.png"
+            >
+              Ваш браузер не підтримує відтворення відео.
+            </video>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Голосні звуки та букви, які їх позначають: А, О, У, Е, И, І.</h3>
+            <div class="video-meta">
+              <span class="badge badge--local">Файл на сайті</span>
+              <span>Рівень: 1–2 клас</span>
+            </div>
+            <p class="video-description">
+              Вивчення голосних звуків А, О, У, Е, И, І та букв, які їх позначають в цікавій ігровій формі. Для дітей підготовчих груп, учнів початкових класів, їх батьків, вчителів та вихователів.
+            </p>
+          </div>
+        </article>
+
+        <!-- сюди пізніше можна додавати ще локальні відео з математики -->
+      </div>
+    </section>
+
+    <!-- ЧИТАННЯ -->
+    <section class="category-section">
+      <h2 class="section-title">Математика</h2>
+
+      <div class="video-grid">
+        <!-- 1. YouTube-відео (математика) -->
+        <article class="video-card">
+          <div class="video-wrapper video-link-wrapper">
+            <a
+              href="https://youtu.be/RJ5S2BDRrK0?si=96JkMMAxP0B4AszR"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="video-link"
+            >
+              <img
+                src="sklad_3.png"
+                alt="Склад числа 3."
+                class="video-thumb"
+              />
+              <div class="video-play-overlay">▶</div>
+            </a>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Склад числа 3.</h3>
+            <div class="video-meta">
+              <span class="badge badge--youtube">YouTube</span>
+              <span>Рівень: 1–2 клас</span>
+            </div>
+            <p class="video-description">
+             В допомогу дошкільнятам та першокласникам для легкого запам'ятовування складу числа 3. Відомості про те, де зустрічається число 3.
+            </p>
+          </div>
+        </article>
+
+        <!-- 2. Локальне відео (читання) -->
+        <article class="video-card">
+          <div class="video-wrapper">
+            <video src="kazka_sklad_chisla_10.mp4" controls="" preload="metadata" poster="kazka_sklad_chisla_10.png">
+              Ваш браузер не підтримує відтворення відео.
+            </video>
+            
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">КАЗКА: склад числа 10</h3>
+            <div class="video-meta">
+              <span class="badge badge--local">Файл на сайті</span>
+              <span>Рівень: 1-2 клас</span>
+            </div>
+            <p class="video-description">
+              Навчальне відео про склад числа 10 для дітей молодшої школи.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- МАЛЮВАННЯ -->
+    <section class="category-section">
+      <h2 class="section-title">Малювання на комп’ютері</h2>
+
+      <div class="video-grid">
+        <!-- 1. YouTube-відео (малювання) -->
+        <article class="video-card">
+          <div class="video-wrapper video-link-wrapper">
+            <a
+              href="https://youtu.be/VIDEO_ID_DRAWING"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="video-link"
+            >
+              <img
+                src="https://img.youtube.com/vi/VIDEO_ID_DRAWING/hqdefault.jpg"
+                alt="Малюємо на комп'ютері (YouTube)"
+                class="video-thumb"
+              />
+              <div class="video-play-overlay">▶</div>
+            </a>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Перші кроки в малюванні на комп’ютері</h3>
+            <div class="video-meta">
+              <span class="badge badge--youtube">YouTube</span>
+              <span>Рівень: 2–3 клас</span>
+            </div>
+            <p class="video-description">
+              Знайомство з простою програмою для малювання та базовими інструментами.
+            </p>
+          </div>
+        </article>
+
+        <!-- 2. Локальне відео (малювання) -->
+        <article class="video-card">
+          <div class="video-wrapper">
+            <video
+              src="drawing_lesson_1.mp4"
+              controls
+              preload="metadata"
+              poster="drawing_lesson_1.png"
+            >
+              Ваш браузер не підтримує відтворення відео.
+            </video>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Малюємо будиночок</h3>
+            <div class="video-meta">
+              <span class="badge badge--local">Файл на сайті</span>
+              <span>Рівень: 2–3 клас</span>
+            </div>
+            <p class="video-description">
+              Покрокове малювання простого будиночка з використанням основних фігур.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ІНФОРМАТИКА -->
+    <section class="category-section">
+      <h2 class="section-title">Інформатика</h2>
+
+      <div class="video-grid">
+        <!-- 1. YouTube-відео (інформатика) -->
+        <article class="video-card">
+          <div class="video-wrapper video-link-wrapper">
+            <a
+              href="https://youtu.be/VIDEO_ID_CS"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="video-link"
+            >
+              <img
+                src="https://img.youtube.com/vi/VIDEO_ID_CS/hqdefault.jpg"
+                alt="Перші кроки в інформатиці (YouTube)"
+                class="video-thumb"
+              />
+              <div class="video-play-overlay">▶</div>
+            </a>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Перші кроки в інформатиці</h3>
+            <div class="video-meta">
+              <span class="badge badge--youtube">YouTube</span>
+              <span>Рівень: 2–4 клас</span>
+            </div>
+            <p class="video-description">
+              Що таке комп’ютер, як безпечно працювати та для чого він потрібен.
+            </p>
+          </div>
+        </article>
+
+        <!-- 2. Локальне відео (інформатика) -->
+        <article class="video-card">
+          <div class="video-wrapper">
+            <video
+              src="cs_lesson_1.mp4"
+              controls
+              preload="metadata"
+              poster="cs_lesson_1.png"
+            >
+              Ваш браузер не підтримує відтворення відео.
+            </video>
+          </div>
+
+          <div class="video-content">
+            <h3 class="video-title">Мишка та клавіатура</h3>
+            <div class="video-meta">
+              <span class="badge badge--local">Файл на сайті</span>
+              <span>Рівень: 2–3 клас</span>
+            </div>
+            <p class="video-description">
+              Вчимося користуватися мишкою та основними клавішами клавіатури.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
+  </main>
+</body>
+</html>

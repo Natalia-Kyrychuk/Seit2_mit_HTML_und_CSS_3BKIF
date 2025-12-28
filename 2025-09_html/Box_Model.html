@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Box Model — Переключатель box-sizing</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      padding: 40px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+    }
+
+    .wrapper {
+      text-align: center;
+    }
+
+    .box {
+      width: 200px;
+      height: 100px;
+      padding: 20px;
+      border: 5px solid #333;
+      background-color: #ffa94d;
+      margin: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .label {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    /* Переключатель */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #4caf50;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+  </style>
+</head>
+<body>
+  <h1>📦 CSS Box Model — Переключатель box-sizing</h1>
+
+  <div class="toggle-container">
+    <span>content-box</span>
+    <label class="switch">
+      <input type="checkbox" id="boxToggle">
+      <span class="slider"></span>
+    </label>
+    <span>border-box</span>
+  </div>
+
+  <div class="container">
+    <div class="wrapper">
+      <div class="box">Box 1</div>
+      <div class="label" id="label1"></div>
+    </div>
+
+    <div class="wrapper">
+      <div class="box">Box 2</div>
+      <div class="label" id="label2"></div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('boxToggle');
+    const boxes = document.querySelectorAll('.box');
+    const label1 = document.getElementById('label1');
+    const label2 = document.getElementById('label2');
+
+    function updateLabels() {
+      const type = boxes[0].style.boxSizing || 'content-box';
+      if (type === 'border-box') {
+        label1.textContent = 'Общая ширина = width (всё внутри)';
+        label2.textContent = 'Общая ширина = width (всё внутри)';
+      } else {
+        label1.textContent = 'Общая ширина = width + padding + border';
+        label2.textContent = 'Общая ширина = width + padding + border';
+      }
+    }
+
+    toggle.addEventListener('change', () => {
+      const newType = toggle.checked ? 'border-box' : 'content-box';
+      boxes.forEach(box => {
+        box.style.boxSizing = newType;
+      });
+      updateLabels();
+    });
+
+    // Устанавливаем начальные значения
+    boxes.forEach(box => {
+      box.style.boxSizing = 'content-box';
+    });
+    updateLabels();
+  </script>
+</body>
+</html>
